@@ -13,7 +13,7 @@ import { useFonts } from 'expo-font';
 import CountdownScreen from './screens/CountdownScreen';
 import SignIn from './screens/SignIn';
 import Leaderboard from './screens/LeaderboardScreen';
-
+import AccountForm from './screens/AccountForm';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -33,9 +33,11 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawer {...props} />}
-        screenOptions={{ headerShown: false, drawerActiveTintColor: 'gray' }}
-        initialRouteName="Workout"
+        screenOptions={{ headerShown: false, drawerActiveTintColor: 'gray',drawerStatusBarAnimation:'slide', }}
+        initialRouteName="Temp Form"
+        
       >
+        <Drawer.Screen name="Temp Form" component={AccountForm} />
         <Drawer.Screen name="Workout" component={WorkoutScreen} />
         <Drawer.Screen name="Onboarding" component={OnboardingScreen} />
         <Drawer.Screen name="Home" component={HomeScreen} />
