@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
 import Register from './Register'
 import { ActivityIndicator } from 'react-native'
-import {auth} from "../config/firebase"
+import {auth,store} from "../config/firebase"
+import { collection,addDoc } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 const AccountForm = ({navigation}) => {
@@ -16,6 +17,18 @@ const AccountForm = ({navigation}) => {
     const [vis, setVis] = useState(false)
     const [logged,setLogged] = useState(false)
 
+    async function storeData(myId)
+    {
+        try {
+            const docRef = await addDoc(collection(store, "users"), {
+              name: myId
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+    }
+
     function LogIn()
     {
      signInWithEmailAndPassword(auth,email,pass) 
@@ -23,6 +36,7 @@ const AccountForm = ({navigation}) => {
         const user = userCreds.user;
         console.log(user.email + "Signed In")
         setLogged(true)
+        storeData(user.uid)
         setTimeout(() =>{
             navigation.openDrawer()
             setLogged(false)
@@ -30,12 +44,15 @@ const AccountForm = ({navigation}) => {
             setPass('')
             setMessage('')
         },1000)
+        
     })
     .catch((error) => {
         console.log(error)
         setMessage("Invalid Email or Password!")
       });
     }
+
+
 
   return (
     <>
