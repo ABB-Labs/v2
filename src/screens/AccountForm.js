@@ -1,157 +1,146 @@
-import { Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler'
-import Register from './Register'
-import { ActivityIndicator } from 'react-native'
-import {auth,store} from "../config/firebase"
-import { collection,addDoc } from 'firebase/firestore'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
-import { useNavigation } from '@react-navigation/native'
-const AccountForm = ({navigation}) => {
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, Pressable, StyleSheet, ActivityIndicator, Modal } from 'react-native';
+import Register from './Register.js';
+import { useNavigation } from '@react-navigation/native';
+import { signInWithEmailAndPassword } from '../config/firebase';
+import { UserContext } from '../UserContext';
+import { auth } from '../config/firebase';
 
-    const nav = useNavigation
+const AccountForm = () => {
+    const navigation = useNavigation();
+    const { setUserId } = useContext(UserContext);
 
-    const [email,setEmail] = useState('')
-    const [pass,setPass] = useState('')
-    const [message,setMessage] = useState('')
-    const [vis, setVis] = useState(false)
-    const [logged,setLogged] = useState(false)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [loggingIn, setLoggingIn] = useState(false);
+    const [vis, setVis] = useState(false);
 
-    async function storeData(myId)
-    {
-        try {
-            const docRef = await addDoc(collection(store, "users"), {
-              name: myId
+    const LogIn = () => {
+        setLoggingIn(true);
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCreds) => {
+                const user = userCreds.user;
+                console.log(user.email + ' Signed In');
+                
+                setUserId(user.uid);
+    
+                setTimeout(() => {
+                    navigation.openDrawer();
+                    setLoggingIn(false);
+                    setEmail('');
+                    setPassword('');
+                    setMessage('');
+                    console.log("User context:", user.uid);
+                }, 1000);
+            })
+            .catch((error) => {
+                console.log(error);
+                setMessage('Invalid Email or Password!');
+                setLoggingIn(false);
             });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-    }
+    };
+    
 
-    function LogIn()
-    {
-     signInWithEmailAndPassword(auth,email,pass) 
-     .then((userCreds) =>{
-        const user = userCreds.user;
-        console.log(user.email + "Signed In")
-        setLogged(true)
-        storeData(user.uid)
-        setTimeout(() =>{
-            navigation.openDrawer()
-            setLogged(false)
-            setEmail('')
-            setPass('')
-            setMessage('')
-        },1000)
-        
-    })
-    .catch((error) => {
-        console.log(error)
-        setMessage("Invalid Email or Password!")
-      });
-    }
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Log In</Text>
+            <TextInput
+                placeholder="Email"
+                placeholderTextColor="gray"
+                value={email}
+                style={[styles.input, { marginTop: '5%' }]}
+                onChangeText={(text) => setEmail(text)}
+            />
+            <TextInput
+                placeholder="Password"
+                placeholderTextColor="gray"
+                value={password}
+                style={styles.input}
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}
+            />
+            <Text style={styles.message}>{message}</Text>
+            {loggingIn ? (
+                <ActivityIndicator size="large" color="lightgray" />
+            ) : (
+                <Pressable
+                    onPress={LogIn}
+                    style={({ pressed }) => [styles.button, { opacity: pressed ? 0.85 : 1 }]}
+                >
+                    <Text style={styles.buttonText}>Log in</Text>
+                </Pressable>
+            )}
 
+            <Pressable onPress={() => setVis(true)} style={styles.createButton}>
+                <Text style={styles.createButtonText}>Create An Account</Text>
+            </Pressable>
 
-
-  return (
-    <>
-    <SafeAreaView  backgroundColor = '#090909'/>
-    <View style = {styles.con}>
-        <Text style = {styles.title}>Log In</Text>
-        <TextInput
-        placeholder='Email'
-        placeholderTextColor={'gray'}
-        value={email}
-        style = {[styles.input,{marginTop:"5%"}]}
-        onChangeText={text => setEmail(text)}
-        />
-        <TextInput
-        placeholder='Password'
-        placeholderTextColor={'gray'}
-        value={pass}
-        style = {styles.input}
-        onChangeText={text => setPass(text)}
-        />
-        <Text style = {styles.mess}>{message}</Text>
-        {logged ?
-        <ActivityIndicator size={'large'} color={"lightgray"} />
-        :
-        <Pressable onPress={LogIn} style={({ pressed }) => [styles.button,{ opacity: pressed ? 0.85 : 1 }, ]}>
-            <Text style = {styles.text}>Log in</Text>
-        </Pressable>
-        }
-        <Text style = {styles.link}>
-            New to Simply?
-            <Text onPress={ () => setVis(true)} style = {{textDecorationLine:"underline"}}> Create An Account</Text>
-        </Text>
-            <Modal visible = {vis} animationType='slide'>
+            <Modal visible={vis} animationType="slide">
                 <View style={styles.modalContainer}>
-                    <Register onCreate = {() => {
-                        setVis(false)
-                        setMessage('')
-                    }} 
-                    onPress = {() => setVis(false)}
-                    />
+                    <Register onCreate={() => setVis(false)} onPress={() => setVis(false)} />
                 </View>
             </Modal>
-    </View>
-    </>
-  )
-} 
-
-export default AccountForm
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
-    con:{
-        flex:1,
-        justifyContent:"center",
-        alignItems:"center",
-        backgroundColor:'#090909',
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        paddingHorizontal: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 15,
         width: '100%',
     },
-    input:{
-        borderWidth:1,
-        borderColor:"gray",
-        height:'8%',
-        width:"70%",
-        padding:"3%",
-        marginVertical:"3%",
-        borderRadius:5,
-        color:"lightgray"
+    button: {
+        backgroundColor: 'blue',
+        padding: 15,
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center',
     },
-    button:{
-        height:"7%",
-        backgroundColor:"darkgray",
-        borderRadius:5,
-        marginTop:"3%",
-        justifyContent:"center",
-        alignItems:"center",
-        width:"55%"
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
-    text:{
-        fontFamily:"Lexend-Regular",
-        color:"black",
+    message: {
+        color: 'red',
+        marginTop: 10,
     },
-    title:{
-        color:"white",
-        fontSize:30,
-        fontFamily:"Lexend-Medium",
+    createButton: {
+        marginTop: 20,
+        backgroundColor: 'green', // Change the color to your preference
+        padding: 15,
+        borderRadius: 5,
+        width: '100%',
+        alignItems: 'center',
     },
-    link:{
-        color:"gray",
-        marginTop:"10%",
-        fontSize:12
+    createButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:'#090909',
-      },
-      mess:{
-        color:"red",
-        fontFamily:"Lexend-Light",
-        fontSize:10
-      }
-})
+        backgroundColor: '#ffffff', // Change the background color if needed
+    },
+});
+
+export default AccountForm;
