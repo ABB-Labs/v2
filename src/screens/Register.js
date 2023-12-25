@@ -23,7 +23,8 @@ const Register = (props) => {
                 setDoc(accountDocRef, {
                     email: user.email,
                     username: username,
-                    streak: 0
+                    streak: 0,
+                    rank: 0
                 });
 
                 setMessage('')
