@@ -9,6 +9,7 @@ import WorkoutScreen from './screens/WorkoutScreen';
 import CustomDrawer from './components/nav/CustomDrawer';
 import WorkoutSummary from './screens/WorkoutSummary';
 import Settings from './screens/Settings';
+import Achievements from './screens/Achievements';
 import { useFonts } from 'expo-font';
 import CountdownScreen from './screens/CountdownScreen';
 import SignIn from './screens/SignIn';
@@ -44,6 +45,7 @@ export default function App() {
         <Drawer.Screen name="SignIn" component={SignIn} />
         <Drawer.Screen name="Settings" component={Settings} />
         <Drawer.Screen name="Leaderboard" component={Leaderboard} />
+        <Drawer.Screen name="Achievements" component={Achievements} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -8,7 +8,7 @@ const CustomDrawer = (props) => {
     <>
     <SafeAreaView backgroundColor = "black"/>
     <View style = {styles.container}>
-        <Text style = {styles.head}>Developer Navigation </Text>
+        <Text style = {styles.head}>Developer Navigation :) </Text>
         <DrawerContentScrollView {...props}>
             <DrawerItemList {...props}/>
         </DrawerContentScrollView>

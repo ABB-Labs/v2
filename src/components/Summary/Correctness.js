@@ -12,7 +12,6 @@ const Correctness = () => {
     <View style = {styles.box}>
     <Text style = {styles.endure}>ENDURANT</Text>
       <View style = {styles.left}>
-
          <Text style = {styles.title}>HAVE</Text>
           <Text style = {styles.stat}>124</Text>
           <Text style = {styles.title} >UNLOCKED</Text>

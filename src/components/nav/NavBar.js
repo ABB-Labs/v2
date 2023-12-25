@@ -9,7 +9,7 @@ const NavBar = ({styles: config}) => {
   return (
     <View style = {[styles.con, config]}>
         <TouchableOpacity onPress={ () => nav.openDrawer()}>
-            <Feather name="menu" size={23} color="white" />
+            <Feather name="menu" size={25} color="white" />
         </TouchableOpacity>
         <View style = {styles.imgBorder}>
           <Image style = {styles.realimg} source={{uri:"https://minecraftfaces.com/wp-content/bigfaces/big-mooshroom-face.png"}} />
