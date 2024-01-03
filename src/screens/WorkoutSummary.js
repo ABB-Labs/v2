@@ -1,14 +1,58 @@
 import { StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
+import React ,{useContext,useEffect, useState} from 'react';
 import background from "../assets/images/WorkoutSummary/background.png";
 import Correctness from '../components/Summary/Correctness';
 import Streak from '../components/Summary/Streak';
 import Earned from '../components/Summary/Earned';
-
+import { UserContext } from '../UserContext';
+import { firestore,auth } from '../config/firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 const WorkoutSummary = () => {
 
+  const {userId,setUserId} = useContext(UserContext)
+  useEffect(() =>{
+    if(userId)
+    {
+      logUserActivity(userId)
+    }
+  },[userId])
+
+  async function logUserActivity(userId) 
+  {
+    try {
+      //Get this user's document, aand extract the userData
+      const ref = doc(firestore, 'accounts', userId);
+      const userData = await getDoc(ref);
+
+      //Get the current date, along with the user's last daay of activity
+      const currentDate = new Date().toISOString().split('T')[0];
+      const lastActivityDate = userData.data().lastActivity;
+  
+      // Check if a day has been missed
+      if (lastActivityDate !== currentDate) {
+        // If a day has been missed, reset the streak to 0
+        const newData = {
+          streak: 0,
+          lastActivity: currentDate,
+        };
+        await updateDoc(ref, newData);
+        console.log('Streak has been reset to 0');
+      } else {
+        // If no day has been missed, increment the streak
+        const currentStreak = userData.data().streak;
+        const newData = {
+          streak: currentStreak + 1,
+          lastActivity: currentDate,
+        };
+        await updateDoc(ref, newData);
+      }
+      console.log('Data has been written');
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <>
     <ImageBackground source={background} style = {styles.container}>

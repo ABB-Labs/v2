@@ -4,12 +4,11 @@ import Register from './Register.js';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from '../config/firebase';
 import { UserContext } from '../UserContext';
-import { auth } from '../config/firebase';
-
+import { auth,firestore } from '../config/firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 const AccountForm = () => {
     const navigation = useNavigation();
     const { setUserId } = useContext(UserContext);
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -24,6 +23,14 @@ const AccountForm = () => {
                 console.log(user.email + ' Signed In');
                 
                 setUserId(user.uid);
+                
+                const currentDate = new Date().toISOString().split('T')[0];
+
+                const ref = doc(firestore, 'accounts', user.uid);
+                const newData = {
+                    lastActivity: currentDate,
+                  };
+                updateDoc(ref, newData);
     
                 setTimeout(() => {
                     navigation.openDrawer();

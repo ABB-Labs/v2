@@ -24,7 +24,8 @@ const Register = (props) => {
                     email: user.email,
                     username: username,
                     streak: 0,
-                    rank: 0
+                    rank: 0,
+                    lastActivity:null
                 });
 
                 setMessage('')

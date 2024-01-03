@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   SafeAreaView,
@@ -9,7 +9,9 @@ import {
   Switch,
 } from 'react-native';
 import NavBar from '../components/nav/NavBar';
-
+import { UserContext } from '../UserContext';
+import { firestore,auth } from '../config/firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 const images = {
   exercise3D: require('../assets/images/exercise-3d.png'),
   exerciseML: require('../assets/images/exercise-ml.png'),
