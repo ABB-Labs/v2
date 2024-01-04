@@ -8,7 +8,7 @@ import Streak from '../components/Summary/Streak';
 import Earned from '../components/Summary/Earned';
 import { UserContext } from '../UserContext';
 import { firestore,auth } from '../config/firebase';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, setDoc, updateDoc,where,orderBy,limit } from 'firebase/firestore';
 const WorkoutSummary = () => {
 
   const {userId,setUserId} = useContext(UserContext)
@@ -19,10 +19,41 @@ const WorkoutSummary = () => {
     }
   },[userId])
 
+  async function updateRank(userId, streak) {
+    try {
+      const userRef = doc(firestore, 'accounts', userId);
+      const userSnapshot = await getDoc(userRef);
+  
+      const userRank = {
+        userId: userId,
+        streak: streak,
+        rank: userSnapshot.data().rank, // Assume rank is already set in the database
+      };
+  
+      // Fetch all documents and perform filtering
+      const allUsers = await getDocs(collection(firestore, 'accounts'));
+      
+      // Filter users with a higher streak
+      const higherStreakUsers = allUsers.docs.filter(doc => {
+        const userData = doc.data();
+        return userData.rank !== -1 && userData.streak > streak;
+      });
+  
+      // Calculate the new rank based on the number of users with a higher streak
+      const newRank = higherStreakUsers.length + 1;
+  
+      // Update the rank in the database
+      await updateDoc(userRef, { rank: newRank });
+      console.log('Rank has been updated to', newRank);
+    } catch (error) {
+      console.error('Error updating rank:', error);
+    }
+  }
+  
   async function logUserActivity(userId) 
   {
     try {
-      //Get this user's document, aand extract the userData
+      //Get this user's document, and extract the userData
       const ref = doc(firestore, 'accounts', userId);
       const userData = await getDoc(ref);
 
@@ -38,6 +69,9 @@ const WorkoutSummary = () => {
           lastActivity: currentDate,
         };
         await updateDoc(ref, newData);
+
+        await updateRank(userId, 0);
+
         console.log('Streak has been reset to 0');
       } else {
         // If no day has been missed, increment the streak
@@ -47,6 +81,8 @@ const WorkoutSummary = () => {
           lastActivity: currentDate,
         };
         await updateDoc(ref, newData);
+
+        await updateRank(userId, currentStreak + 1);
       }
       console.log('Data has been written');
     } catch (err) {
