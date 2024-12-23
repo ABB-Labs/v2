@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View,Image,SafeAreaView } from 'react-native'
 import React from 'react'
-import outline from "../assets/images/Settings/basil_settings-outline.png"
+import outline from "../assets/images/basil_settings-outline.png"
 import SettingSwitch from '../components/Settings/SettingSwitch'
 import NavBar from '../components/nav/NavBar'
 import { StatusBar } from 'expo-status-bar'

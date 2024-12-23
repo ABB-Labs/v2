@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-nativ
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
-import background from "../assets/images/WorkoutSummary/background.png";
+import background from "../assets/images/background.png";
 import Correctness from '../components/Summary/Correctness';
 import Streak from '../components/Summary/Streak';
 import Earned from '../components/Summary/Earned';
