@@ -126,6 +126,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#090909',
     marginVertical: -10,
+    marginLeft: 15,
+    marginRight: 15
   },
   section: {
     flexDirection: 'row',

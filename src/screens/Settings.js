@@ -16,25 +16,25 @@ const Settings = () => {
             </View>
             <Text style = {[styles.header,{width:200}]}>Customize Your Experience</Text>
         </View>
-        <Text style = {styles.header}>Notifications</Text>
-        <SettingSwitch title = "Remind Me Daily"/>
-        <Text style = {[styles.header,{marginTop:"5%"}]}>My 7 Minutes</Text>
-        <View style = {styles.scrollCon}>
-            <ScrollView contentContainerStyle={{paddingBottom:"90%"}} style = {{width:"100%"}} >
-                <SettingSwitch title = "Jumping Jacks"/>
-                <SettingSwitch title = "Wall Sits"/>
-                <SettingSwitch title = "Push ups"/>
-                <SettingSwitch title = "Abdominal Crunch"/>
-                <SettingSwitch title = "Step Ups"/>
-                <SettingSwitch title = "Squats"/>
-                <SettingSwitch title = "Tricep Dips"/>
-                <SettingSwitch title = "Plank"/>
-                <SettingSwitch title = "Running In Place"/>
-                <SettingSwitch title = "Lunges"/>
-                <SettingSwitch title = "Push Ups With Rotation"/>
-                <SettingSwitch title = "Side Planks"/>
-            </ScrollView>
-         </View>
+        <ScrollView style = {{marginBottom: "15", width:"100%"}} >
+          <Text style = {styles.header}>Notifications</Text>
+          <SettingSwitch title = "Remind Me Daily"/>
+          <Text style = {[styles.header,{marginTop:"5%"}]}>My 7 Minutes</Text>
+          <View style = {styles.scrollCon}>
+              <SettingSwitch title = "Jumping Jacks"/>
+              <SettingSwitch title = "Wall Sits"/>
+              <SettingSwitch title = "Push ups"/>
+              <SettingSwitch title = "Abdominal Crunch"/>
+              <SettingSwitch title = "Step Ups"/>
+              <SettingSwitch title = "Squats"/>
+              <SettingSwitch title = "Tricep Dips"/>
+              <SettingSwitch title = "Plank"/>
+              <SettingSwitch title = "Running In Place"/>
+              <SettingSwitch title = "Lunges"/>
+              <SettingSwitch title = "Push Ups With Rotation"/>
+              <SettingSwitch title = "Side Planks"/>
+           </View>
+        </ScrollView>
     </SafeAreaView>
     
 

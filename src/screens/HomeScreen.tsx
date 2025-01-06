@@ -17,7 +17,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-      <NavBar />
+      <NavBar styles={{paddingHorizontal: "7.5%"}} />
       <SectionB />
       <SectionC />
     </SafeAreaView>
