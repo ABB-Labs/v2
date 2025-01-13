@@ -9,9 +9,9 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./src/assets/images/icon.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#090909"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       }
     },

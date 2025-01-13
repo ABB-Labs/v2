@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   SafeAreaView,
@@ -65,13 +65,13 @@ export default function SignIn() {
     <SafeAreaView style={{ flex: 1, zIndex: 2, backgroundColor: '#090909' }}>
       <StatusBar style='light' />
       <NavBar styles={{ backgroundColor: 'transparent' }} />
-      <View style={{flexDirection:'row',marginLeft: 20, marginRight: 20, marginTop: 25}}>
+      <View style={{flexDirection:'row',marginLeft: 20, marginRight: 20, marginTop: 5}}>
         <Svg width={20} height={20} viewBox='0 0 20 20' fill='none'>
           <Path d='M13.333 9.167V2.5H6.666v5h-5v10h16.667V9.167h-5zm-5-5h3.333v11.666H8.333V4.167zm-5 5h3.333v6.666H3.333V9.167zm13.334 6.666h-3.334v-5h3.333v5z' fill='#fff' />
         </Svg>
         <Text style={{color: '#FFF', fontSize: 20, fontWeight: '300', marginLeft: 8}}>Leaderboard</Text>
       </View>
-      <Text style={{color: '#FFF', fontSize: 30, fontWeight: '500', marginLeft: 20, marginRight: 20, marginTop: 10}}>#{leaderboard.findIndex((element) => element.isCurrentUser === true)+1} Against Friends</Text>
+      <Text style={{color: '#FFF', fontSize: 30, fontWeight: '500', marginLeft: 20, marginRight: 20, marginTop: 10}}>#{leaderboard.findIndex((element) => element.isCurrentUser)+1} Against Friends</Text>
       <ScrollView style={{ margin: 20 }}>
         {
           leaderboard.map((item, index) => {

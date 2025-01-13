@@ -15,6 +15,9 @@ import CountdownScreen from './screens/CountdownScreen';
 import SignIn from './screens/SignIn';
 import Leaderboard from './screens/LeaderboardScreen';
 
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -31,23 +34,25 @@ export default function App() {
     'Lexend-Thin': require('./assets/fonts/Lexend-Thin.ttf'),
   });
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawer {...props} />}
-        screenOptions={{ headerShown: false, drawerActiveTintColor: 'gray' }}
-        initialRouteName="Workout"
-      >
-        <Drawer.Screen name="Workout" component={WorkoutScreen} />
-        <Drawer.Screen name="Onboarding" component={OnboardingScreen} />
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="CountdownScreen" component={CountdownScreen} />
-        <Drawer.Screen name="Workout Summary" component={WorkoutSummary} />
-        <Drawer.Screen name="SignIn" component={SignIn} />
-        <Drawer.Screen name="Settings" component={Settings} />
-        <Drawer.Screen name="Leaderboard" component={Leaderboard} />
-        <Drawer.Screen name="Achievements" component={Achievements} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Drawer.Navigator
+          drawerContent={(props) => <SafeAreaView style={{flex: 1}}><CustomDrawer {...props} /></SafeAreaView>}
+          screenOptions={{ headerShown: false, drawerActiveTintColor: 'gray' }}
+          initialRouteName="Workout"
+        >
+          <Drawer.Screen name="Workout" component={WorkoutScreen} />
+          <Drawer.Screen name="Onboarding" component={OnboardingScreen} />
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="CountdownScreen" component={CountdownScreen} />
+          <Drawer.Screen name="Workout Summary" component={WorkoutSummary} />
+          <Drawer.Screen name="SignIn" component={SignIn} />
+          <Drawer.Screen name="Settings" component={Settings} />
+          <Drawer.Screen name="Leaderboard" component={Leaderboard} />
+          <Drawer.Screen name="Achievements" component={Achievements} />
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 
