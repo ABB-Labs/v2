@@ -13,49 +13,25 @@ import Svg, { Path } from 'react-native-svg';
 export default function SignIn() {
   const leaderboard = [
     {
-      image: require('./icon.png'),
+      image: require('.././assets/images/icon.png'),
       name: 'Cowland',
       days: 109,
       isCurrentUser: false
     },
     {
-      image: require('./icon.png'),
+      image: require('.././assets/images/icon.png'),
       name: 'Cowland',
       days: 109,
       isCurrentUser: false
     },
     {
-      image: require('./icon.png'),
+      image: require('.././assets/images/icon.png'),
       name: 'Cowland',
       days: 109,
       isCurrentUser: false
     },
     {
-      image: require('./icon.png'),
-      name: 'Cowland',
-      days: 109,
-      isCurrentUser: false
-    },
-    {
-      image: require('./icon.png'),
-      name: 'Cowland',
-      days: 109,
-      isCurrentUser: false
-    },
-    {
-      image: require('./icon.png'),
-      name: 'Cowland',
-      days: 109,
-      isCurrentUser: false
-    },
-    {
-      image: require('./icon.png'),
-      name: 'YOU',
-      days: 109,
-      isCurrentUser: true
-    },
-    {
-      image: require('./icon.png'),
+      image: require('.././assets/images/icon.png'),
       name: 'Cowland',
       days: 109,
       isCurrentUser: false
