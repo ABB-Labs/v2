@@ -14,8 +14,9 @@ import { useFonts } from 'expo-font';
 import CountdownScreen from './screens/CountdownScreen';
 import SignIn from './screens/SignIn';
 import Leaderboard from './screens/LeaderboardScreen';
-import AccountForm from './screens/AccountForm';
-import { UserProvider } from './UserContext';
+
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -32,18 +33,17 @@ export default function App() {
     'Lexend-Thin': require('./assets/fonts/Lexend-Thin.ttf'),
   });
   return (
-    <UserProvider>
+    <SafeAreaProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawer {...props} />}
-          screenOptions={{
-            headerShown: false,
-            drawerActiveTintColor: 'gray',
-            drawerStatusBarAnimation: 'slide',
-          }}
-          initialRouteName="Temp Form"
+          drawerContent={(props) => (
+            <SafeAreaView style={{ flex: 1 }}>
+              <CustomDrawer {...props} />
+            </SafeAreaView>
+          )}
+          screenOptions={{ headerShown: false, drawerActiveTintColor: 'gray' }}
+          initialRouteName="Workout"
         >
-          <Drawer.Screen name="Temp Form" component={AccountForm} />
           <Drawer.Screen name="Workout" component={WorkoutScreen} />
           <Drawer.Screen name="Onboarding" component={OnboardingScreen} />
           <Drawer.Screen name="Home" component={HomeScreen} />
@@ -52,9 +52,10 @@ export default function App() {
           <Drawer.Screen name="SignIn" component={SignIn} />
           <Drawer.Screen name="Settings" component={Settings} />
           <Drawer.Screen name="Leaderboard" component={Leaderboard} />
+          <Drawer.Screen name="Achievements" component={Achievements} />
         </Drawer.Navigator>
       </NavigationContainer>
-    </UserProvider>
+    </SafeAreaProvider>
   );
 }
 

@@ -4,7 +4,7 @@ import SectionB from '../components/sections/SectionB';
 import SectionC from '../components/sections/SectionC';
 import NavBar from '../components/nav/NavBar';
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const styles = StyleSheet.create({
@@ -17,7 +17,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-      <NavBar />
+      <NavBar styles={{paddingHorizontal: "7.5%"}} />
       <SectionB />
       <SectionC />
     </SafeAreaView>

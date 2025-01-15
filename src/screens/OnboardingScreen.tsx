@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
     position: 'absolute',
+    backgroundColor: "#000"
   },
   text: {
     color: 'white',

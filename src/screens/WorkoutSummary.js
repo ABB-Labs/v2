@@ -6,12 +6,13 @@ import background from "../assets/images/WorkoutSummary/background.png";
 import Correctness from '../components/Summary/Correctness';
 import Streak from '../components/Summary/Streak';
 import Earned from '../components/Summary/Earned';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WorkoutSummary = () => {
 
   return (
-    <>
     <ImageBackground source={background} style = {styles.container}>
+      <SafeAreaView style={{flex: 1}}>
       <View style = {styles.sum}>
         <View style = {styles.date}>
           <Feather style={styles.sun} name="sun" size={26} color="white" />
@@ -29,8 +30,8 @@ const WorkoutSummary = () => {
         <TouchableOpacity activeOpacity={0.75} style={styles.button}>
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
-      </ImageBackground>
-    </>
+      </SafeAreaView>
+    </ImageBackground>
   )
 }
 
